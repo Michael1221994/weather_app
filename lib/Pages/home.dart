@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/Pages/landing_page.dart';
+import 'package:weather_app/Pages/weather_page.dart';
 import 'package:weather_app/util/countrydropdown.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
@@ -58,7 +59,7 @@ class _HomePageState extends State<HomePage> {
   // continue accessing the position of the device.
   
   
-      Position p= await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high, timeLimit: Duration(seconds: 15));
+      Position p= await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high, timeLimit: Duration(seconds: 30));
       print("Position obtained: $position");//debug
       setState(() {
         position= p;
@@ -83,6 +84,9 @@ UseMyLocation(bool? newvalue) async {
       Position? position = await _determinePosition();
       setState(() {
         pos = "Latitude: ${position?.latitude}, Longitude: ${position?.longitude}";
+        if(pos != null){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>const WeatherPage()));
+        }
       });
 
       List<Placemark> placemarks = await placemarkFromCoordinates(position!.latitude, position.longitude);
@@ -106,6 +110,7 @@ UseMyLocation(bool? newvalue) async {
         address = "Error retrieving address";
       });
     }
+    
 }
 
 
@@ -129,13 +134,13 @@ UseMyLocation(bool? newvalue) async {
         child: Stack(
           children: [                  
                  Padding(
-                   padding: const EdgeInsets.only(left: 72.0, top: 135.0),
+                   padding: const EdgeInsets.only(left: 70.0, top: 70.0),
                    child: ClipRRect(
                     borderRadius: BorderRadius.circular(270),
                      child: Image.asset(
                        'lib/Images/Logo.png',
-                        height: 240,
-                        width: 240,
+                        height: 200,
+                        width: 200,
                         ),
                    ),
                  ),
@@ -194,10 +199,10 @@ UseMyLocation(bool? newvalue) async {
                                 ),
                               ],
                             ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.center,
-                            //   children: [
-                            //     Expanded(child: Text(country ?? "", style: const TextStyle(color: Colors.white),))],),
+                             Row(
+                               mainAxisAlignment: MainAxisAlignment.center,
+                               children: [
+                                 Expanded(child: Text(pos ?? "", style: const TextStyle(color: Colors.white),))],),
                             const Padding(
                               padding: EdgeInsets.only (left:35.0),
                               child: Row(

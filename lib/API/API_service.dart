@@ -5,37 +5,94 @@ import 'package:weather_app/API/weather.dart';
 
 
 class ApiService{
-   Future<CurrentWeather> fetch_current_weather(String endpoint) async {
-    final url = Uri.parse(' http://api.weatherapi.com/v1/$endpoint');
-    final response = await http.get(url, headers: {
-      'Authorization': 'Bearer 3e717471fb2744edba5183739242905',
+   Future<ActualWeatherData> fetch_current_weather(String query) async {
+    final url = Uri.parse(' http://api.weatherapi.com/v1/current.json').replace(queryParameters: {
+      'key': '3e717471fb2744edba5183739242905',
+      'q': query,
     });
+    final response = await http.get(url);    
+    // final response = await http.get(url, headers: {
+    //   'Authorization': 'Bearer 3e717471fb2744edba5183739242905',
+    // });
 
     if (response.statusCode == 200) {
-      return CurrentWeather.fromJson(jsonDecode(response.body));
+      return ActualWeatherData.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load Weather Data');
     }
   }
 
-  Future<CurrentWeather> fetch_forecast(String endpoint) async {
-    final url = Uri.parse('http://api.weatherapi.com/v1/$endpoint');
-    final response = await http.get(url, headers: {
-      'Authorization': 'Bearer 3e717471fb2744edba5183739242905',
-    });
+  // Future<ActualWeatherData> fetch_forecast(String endpoint) async {
+  //   final url = Uri.parse('http://api.weatherapi.com/v1/$endpoint');
+  //   final response = await http.get(url, headers: {
+  //     'Authorization': 'Bearer 3e717471fb2744edba5183739242905',
+  //   });
+
+  //   if (response.statusCode == 200) {
+  //     return ActualWeatherData.fromJson(jsonDecode(response.body));
+  //   } else {
+  //     throw Exception('Failed to load Forecast Data');
+  //   }
+  // }
+
+  Future<Forecast> fetchForecast(String query, {int? days, String? dt}) async {
+    final Map<String, String> queryParams = {
+      'key': '3e717471fb2744edba5183739242905',
+      'q': query,
+    };
+
+    if (days != null) {
+      queryParams['days'] = days.toString();
+    }
+
+    if (dt != null) {
+      queryParams['dt'] = dt;
+    }
+
+    final url = Uri.parse('http://api.weatherapi.com/v1/forecast.json').replace(queryParameters: queryParams);
+
+    final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      return CurrentWeather.fromJson(jsonDecode(response.body));
+      return Forecast.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load Forecast Data');
     }
   }
 
-  Future<CurrentWeather> fetch_alert(String endpoint) async {
-    final url = Uri.parse('http://api.weatherapi.com/v1/$endpoint');
-    final response = await http.get(url, headers: {
-      'Authorization': 'Bearer 3e717471fb2744edba5183739242905',
+  // Future<Alert> fetch_alert(String endpoint) async {
+  //   final url = Uri.parse('http://api.weatherapi.com/v1/$endpoint');
+  //   final response = await http.get(url, headers: {
+  //     'Authorization': 'Bearer 3e717471fb2744edba5183739242905',
+  //   });
+
+  //   if (response.statusCode == 200) {
+  //     return Alert.fromJson(jsonDecode(response.body));
+  //   } else {
+  //     throw Exception('Failed to load weather data');
+  //   }
+  // }
+
+  Future<Alert> fetchAlert(String query) async {
+    final url = Uri.parse('http://api.weatherapi.com/v1/alerts.json').replace(queryParameters: {
+      'key': '3e717471fb2744edba5183739242905',
+      'q': query,
     });
+    
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      return Alert.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load Alerts Data');
+    }
+  }
+
+  Future<CurrentWeather> fetch_Location(String query) async {
+    final url = Uri.parse('http://api.weatherapi.com/v1/location').replace(queryParameters: {
+      'key': '3e717471fb2744edba5183739242905',
+      'q': query,});
+    final response = await http.get(url);
 
     if (response.statusCode == 200) {
       return CurrentWeather.fromJson(jsonDecode(response.body));
@@ -44,24 +101,11 @@ class ApiService{
     }
   }
 
-  Future<CurrentWeather> fetch_Location(String endpoint) async {
-    final url = Uri.parse('http://api.weatherapi.com/v1/$endpoint');
-    final response = await http.get(url, headers: {
-      'Authorization': 'Bearer 3e717471fb2744edba5183739242905',
-    });
-
-    if (response.statusCode == 200) {
-      return CurrentWeather.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to load weather data');
-    }
-  }
-
-  Future<CurrentWeather> fetch_astronomy(String endpoint) async {
-    final url = Uri.parse('http://api.weatherapi.com/v1/$endpoint');
-    final response = await http.get(url, headers: {
-      'Authorization': 'Bearer 3e717471fb2744edba5183739242905',
-    });
+  Future<CurrentWeather> fetch_astronomy(String query) async {
+    final url = Uri.parse('http://api.weatherapi.com/v1/astronomy').replace(queryParameters: {
+      'key': '3e717471fb2744edba5183739242905',
+      'q': query,});
+    final response = await http.get(url);
 
     if (response.statusCode == 200) {
       return CurrentWeather.fromJson(jsonDecode(response.body));
