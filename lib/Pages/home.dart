@@ -116,6 +116,7 @@ UseMyLocation(bool? newvalue) async {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: PreferredSize(
@@ -134,23 +135,25 @@ UseMyLocation(bool? newvalue) async {
         child: Stack(
           children: [                  
                  Padding(
-                   padding: const EdgeInsets.only(left: 70.0, top: 70.0),
+                   padding: EdgeInsets.only(left: size.width*0.15, top: size.height*0.1),
                    child: ClipRRect(
                     borderRadius: BorderRadius.circular(270),
                      child: Image.asset(
                        'lib/Images/Logo.png',
-                        height: 200,
-                        width: 200,
+                        height: size.height*0.4,
+                        width: size.width*0.7,
+                        fit: BoxFit.fitHeight,
                         ),
                    ),
                  ),
                                                    
                  Padding(
-                 padding: const EdgeInsets.all(30.0),            
+                 padding: const EdgeInsets.all(10.0),            
                     child: Container(
-                      height: 1000,
+                      height: size.height,
+                      width: size.width*0.9,
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.1),
+                        color: Colors.white.withOpacity(0.063),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
                         color: Colors.white,
