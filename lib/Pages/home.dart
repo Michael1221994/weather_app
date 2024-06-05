@@ -5,19 +5,25 @@ import 'package:weather_app/util/countrydropdown.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {  
+   
+  const HomePage({Key? key,});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage> createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
+ static  String? city;
  bool Radiovalue=false;
  String? address;
  String? pos;
  Position? position;
  String? country;
+
+
+
+
  Future<Position?> _determinePosition() async {
   bool serviceEnabled;
   LocationPermission permission;
@@ -96,6 +102,7 @@ UseMyLocation(bool? newvalue) async {
         Placemark placemark = placemarks.first;
         setState(() {
           country="${placemark.country}";
+          city="${placemark.subAdministrativeArea}";
           //address = "${placemark.street}, ${placemark.locality}, ${placemark.administrativeArea}, "${placemark.country}";
         });
       } else {
@@ -206,16 +213,16 @@ UseMyLocation(bool? newvalue) async {
                                mainAxisAlignment: MainAxisAlignment.center,
                                children: [
                                  Expanded(child: Text(pos ?? "", style: const TextStyle(color: Colors.white),))],),
-                            const Padding(
-                              padding: EdgeInsets.only (left:35.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Country_dropdownbtn()
-                                ],
-                              ),
-                              
-                            )
+                                   Padding(
+                                    padding: EdgeInsets.only (left:35.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Country_dropdownbtn(),
+                                      ],
+                                    ),
+                                    
+                                  ),
                         ],
                       ),
                     ),

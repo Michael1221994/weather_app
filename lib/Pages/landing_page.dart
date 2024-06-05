@@ -51,7 +51,7 @@ class __LandingPageState extends State<LandingPage> {
 
 
 void Go_To_Homepage(BuildContext context) {
-  Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomePage()));
+  Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
   setState(() {
     TextColor= Colors.black;
     backgroundColor= Colors.white;

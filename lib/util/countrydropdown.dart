@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/Pages/weather_page.dart';
 
 class Country_dropdownbtn extends StatefulWidget {
-  const Country_dropdownbtn({super.key});
+  static  String? selectedcountry;
+
+    Country_dropdownbtn({super.key});
 
   @override
   State<Country_dropdownbtn> createState() => _Country_dropdownbtnState();
 }
 
 class _Country_dropdownbtnState extends State<Country_dropdownbtn> {
-   String? _selectedcountry;
+   
 
 
    final List<String> _countries = [
@@ -53,13 +56,16 @@ class _Country_dropdownbtnState extends State<Country_dropdownbtn> {
         child: DropdownButtonFormField<String>(   
              isExpanded: true,
              
-             value: _selectedcountry,
+             value: Country_dropdownbtn.selectedcountry,
              hint: const Text('Select Country', style: TextStyle(color: Colors.white, fontSize: 13)), // Displayed when no country is selected
              dropdownColor: Colors.black,
              iconEnabledColor: Colors.white,
              onChanged: (String? newValue) {
              setState(() {
-              _selectedcountry = newValue;
+              Country_dropdownbtn.selectedcountry = newValue;
+              if(Country_dropdownbtn.selectedcountry != null){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const WeatherPage()));
+              }
             });
           },
           items: _countries.map<DropdownMenuItem<String>>((String value) {

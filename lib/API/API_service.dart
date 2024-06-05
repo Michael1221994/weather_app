@@ -10,7 +10,7 @@ class ApiService{
       'key': '3e717471fb2744edba5183739242905',
       'q': query,
     });
-    final response = await http.get(url);    
+    final response = await http.get(url, headers: {'Authorization': 'Bearer 3e717471fb2744edba5183739242905',});    
     // final response = await http.get(url, headers: {
     //   'Authorization': 'Bearer 3e717471fb2744edba5183739242905',
     // });
@@ -18,7 +18,7 @@ class ApiService{
     if (response.statusCode == 200) {
       return ActualWeatherData.fromJson(jsonDecode(response.body));
     } else {
-      throw Exception('Failed to load Weather Data');
+      throw Exception('Failed to load Weather Data: ${response.statusCode}');
     }
   }
 
@@ -51,12 +51,12 @@ class ApiService{
 
     final url = Uri.parse('http://api.weatherapi.com/v1/forecast.json').replace(queryParameters: queryParams);
 
-    final response = await http.get(url);
+    final response = await http.get(url,headers: {'Authorization': 'Bearer 3e717471fb2744edba5183739242905',});
 
     if (response.statusCode == 200) {
       return Forecast.fromJson(jsonDecode(response.body));
     } else {
-      throw Exception('Failed to load Forecast Data');
+      throw Exception('Failed to load Forecast Data: ${response.statusCode}');
     }
   }
 
@@ -79,38 +79,38 @@ class ApiService{
       'q': query,
     });
     
-    final response = await http.get(url);
+    final response = await http.get(url,headers: {'Authorization': 'Bearer 3e717471fb2744edba5183739242905',});
 
     if (response.statusCode == 200) {
       return Alert.fromJson(jsonDecode(response.body));
     } else {
-      throw Exception('Failed to load Alerts Data');
+      throw Exception('Failed to load Alerts Data:  ${response.statusCode}');
     }
   }
 
-  Future<CurrentWeather> fetch_Location(String query) async {
+  Future<Location> fetch_Location(String query) async {
     final url = Uri.parse('http://api.weatherapi.com/v1/location').replace(queryParameters: {
       'key': '3e717471fb2744edba5183739242905',
       'q': query,});
-    final response = await http.get(url);
+    final response = await http.get(url,headers: {'Authorization': 'Bearer 3e717471fb2744edba5183739242905',});
 
     if (response.statusCode == 200) {
-      return CurrentWeather.fromJson(jsonDecode(response.body));
+      return Location.fromJson(jsonDecode(response.body));
     } else {
-      throw Exception('Failed to load weather data');
+      throw Exception('Failed to load weather data: ${response.statusCode}');
     }
   }
 
-  Future<CurrentWeather> fetch_astronomy(String query) async {
+  Future<Astro> fetch_astronomy(String query) async {
     final url = Uri.parse('http://api.weatherapi.com/v1/astronomy').replace(queryParameters: {
       'key': '3e717471fb2744edba5183739242905',
       'q': query,});
-    final response = await http.get(url);
+    final response = await http.get(url,headers: {'Authorization': 'Bearer 3e717471fb2744edba5183739242905',});
 
     if (response.statusCode == 200) {
-      return CurrentWeather.fromJson(jsonDecode(response.body));
+      return Astro.fromJson(jsonDecode(response.body));
     } else {
-      throw Exception('Failed to load weather data');
+      throw Exception('Failed to load weather data: ${response.statusCode}');
     }
   }
 }
