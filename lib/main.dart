@@ -12,8 +12,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return   const MaterialApp(
+    return    MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData.light().copyWith(
+        // Set the primary color to your desired color
+        primaryColor: Colors.blue,
+        // Set the color of the Radio widget
+        unselectedWidgetColor: Colors.white,
+      ),
       home: LandingPage(),
       
       

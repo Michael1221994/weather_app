@@ -125,111 +125,131 @@ UseMyLocation(bool? newvalue) async {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(28),
-        child: AppBar(
-          backgroundColor: Colors.black,
-          leading:IconButton(
-            icon:const Icon(Icons.exit_to_app),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>const LandingPage()));
-          },
-          color: Colors.white),
+      //backgroundColor: Colors.black,
+      
+      body: Container(
+        decoration: BoxDecoration(
+         gradient: LinearGradient(
+           begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+          colors: [
+            Color.fromARGB(255, 68, 26, 1),
+            Color.fromARGB(244, 82, 66, 3),
+            Color.fromARGB(255, 65, 62, 224),
+            Color.fromARGB(255, 2, 40, 145)
+          ],
+         
         ),
       ),
-      body: Center(
-        child: Stack(
-          children: [                  
-                 Padding(
-                   padding: EdgeInsets.only(left: size.width*0.15, top: size.height*0.1),
-                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(270),
-                     child: Image.asset(
-                       'lib/Images/Logo.png',
-                        height: size.height*0.4,
-                        width: size.width*0.7,
-                        fit: BoxFit.fitHeight,
-                        ),
-                   ),
-                 ),
-                                                   
-                 Padding(
-                 padding: const EdgeInsets.all(10.0),            
-                    child: Container(
-                      height: size.height,
-                      width: size.width*0.9,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.063),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                        color: Colors.white,
-                        width: 1, // Adjust the width of the glowing border
-                      ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.white.withOpacity(0.04), // Adjust the opacity if needed
-                            blurRadius: 20,
-                            spreadRadius: 10,
-                          ),
-                        ],                      
-                      ),
-                      alignment: Alignment.center,
-                      
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                         
-                          const Text(
-                            'Location',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),),
-                            Container(
-                              width: 160,
-                              height: 1, // Adjust the height of the line as needed
-                              color: Colors.white, // Adjust the color of the line as needed
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top:8.0),
+              child: Row(
+                children: [IconButton(
+                    icon:const Icon(Icons.exit_to_app),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const LandingPage()));
+                  },
+                  color: Colors.white),]
+                    ),
+            ),
+            Center(
+              child: Stack(
+                children: [                  
+                       Padding(
+                         padding: EdgeInsets.only(left: size.width*0.32, top: size.height*0.15),
+                         child: ClipRRect(
+                          borderRadius: BorderRadius.circular(27),
+                           child: Image.asset(
+                             'lib/Images/partly-cloudy.ico',
+                              height: size.height*0.16,
+                              width: size.width*0.3,
+                              fit: BoxFit.contain,
+                              ),
+                         ),
+                       ),
+                                                         
+                       Padding(
+                       padding: const EdgeInsets.only(bottom:10.0, left: 10.0, right: 10),            
+                          child: Container(
+                            height: size.height*0.88,
+                            width: size.width*0.9,
+                            decoration: BoxDecoration(
+                                 color: Colors.white.withOpacity(0.1),
+                                 borderRadius: BorderRadius.circular(20),
+                                 border: Border.all(
+                                   color: Colors.white.withOpacity(0.2),
+                                   width: 0.5, // Adjust the width of the glowing border
                             ),
-                            Row(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.white.withOpacity(0.04), // Adjust the opacity if needed
+                                  blurRadius: 20,
+                                  spreadRadius: 10,
+                                ),
+                              ],                      
+                            ),
+                            alignment: Alignment.center,
+                            
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Radio(
-                                  value: Radiovalue,
-                                  groupValue: true,
-                                  onChanged:UseMyLocation,
-                                  activeColor: Colors.white,
-                                ),
+                               
                                 const Text(
-                                  'My Location', 
+                                  'Location',
                                   style: TextStyle(
                                     color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),),
+                                  Container(
+                                    width: 160,
+                                    height: 1, // Adjust the height of the line as needed
+                                    color: Colors.white, // Adjust the color of the line as needed
                                   ),
-                                ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Radio(
+                                        
+                                        value: Radiovalue,
+                                        groupValue: true,
+                                        onChanged:UseMyLocation,
+                                        activeColor: Colors.white,
+                                      ),
+                                      const Text(
+                                        'My Location', 
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  //  Row(
+                                  //    mainAxisAlignment: MainAxisAlignment.center,
+                                  //    children: [
+                                  //      Expanded(child: Text(pos ?? "", style: const TextStyle(color: Colors.white),))],),
+                                         Padding(
+                                          padding: EdgeInsets.only (left:35.0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Country_dropdownbtn(),
+                                            ],
+                                          ),
+                                          
+                                        ),
                               ],
                             ),
-                             Row(
-                               mainAxisAlignment: MainAxisAlignment.center,
-                               children: [
-                                 Expanded(child: Text(pos ?? "", style: const TextStyle(color: Colors.white),))],),
-                                   Padding(
-                                    padding: EdgeInsets.only (left:35.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Country_dropdownbtn(),
-                                      ],
-                                    ),
-                                    
-                                  ),
-                        ],
+                          ),
+                        
                       ),
-                    ),
-                  
-                ),
-              
-              
+                    
+                    
+                ],
+              ),
+            ),
           ],
         ),
       ),

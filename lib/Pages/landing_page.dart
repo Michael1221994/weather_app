@@ -67,29 +67,43 @@ void Go_To_Homepage(BuildContext context) {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Padding(
-        padding: const EdgeInsets.all(25.0),
-        child: Center(
-         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AnimatedTextKit(
-                animatedTexts: [
-                  TypewriterAnimatedText(
-                   Riddles[generateRandomNumber(0, 29)],
-                   textStyle: const TextStyle(color: Colors.white),
-                   speed: const Duration(milliseconds: 60)
-                  )
-                ],
-                totalRepeatCount: 1,
-                repeatForever: false,
-                ),
-            const SizedBox(height: 25,),
-            MyButton (on_pressed:() => Go_To_Homepage(context), color:backgroundColor, text: "Continue",textcolor:TextColor , ),
-          ]
-          ),
-         ),
+      body: Container(
+        decoration: BoxDecoration(
+        gradient: LinearGradient(
+           begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+          colors: [
+            Color.fromARGB(255, 61, 15, 1),
+            Color.fromARGB(244, 182, 100, 6),
+            Color.fromARGB(255, 6, 105, 105),
+            Color.fromARGB(255, 4, 6, 119)
+          ],
+         
+        ),
+      ),
+        child: Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: Center(
+           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AnimatedTextKit(
+                  animatedTexts: [
+                    TypewriterAnimatedText(
+                     Riddles[generateRandomNumber(0, 29)],
+                     textStyle: const TextStyle(color: Colors.white),
+                     speed: const Duration(milliseconds: 60)
+                    )
+                  ],
+                  totalRepeatCount: 1,
+                  repeatForever: false,
+                  ),
+              const SizedBox(height: 25,),
+              MyButton (on_pressed:() => Go_To_Homepage(context), color:backgroundColor, text: "Continue",textcolor:TextColor , ),
+            ]
+            ),
+           ),
+        ),
       ),
         
     );

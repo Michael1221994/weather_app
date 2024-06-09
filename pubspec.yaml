@@ -42,10 +42,18 @@ dependencies:
   http: ^1.2.1
   flutter_secure_storage: ^7.0.1
   json_annotation: ^4.4.0
+  animate_gradient: ^0.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "lib/Images/App-icon.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

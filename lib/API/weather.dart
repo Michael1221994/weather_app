@@ -264,7 +264,7 @@ class Day {
   final double totalsnowCm;
   final double avgvisKm;
   final double avgvisMiles;
-  final double avghumidity;
+  final int avghumidity;
   final int dailyWillItRain;
   final int dailyChanceOfRain;
   final int dailyWillItSnow;
@@ -337,8 +337,8 @@ class Hour {
   final double precipMm;
   final double precipIn;
   final double snowCm;
-  final int humidity;
-  final int cloud;
+  final int humidity; 
+  final int cloud;  
   final double feelslikeC;
   final double feelslikeF;
   final double windchillC;
@@ -440,7 +440,7 @@ class Astro {
   final String moonrise;
   final String moonset;
   final String moonPhase;
-  final String moonIllumination;
+  final int moonIllumination;
   final int isMoonUp;
   final int isSunUp;
 
@@ -499,18 +499,52 @@ class ForecastDay {
   }
 }
 
-class Forecast {
+class ForecastData {
   final List<ForecastDay> forecastday;
 
-  Forecast({required this.forecastday});
+  ForecastData({required this.forecastday});
 
-  factory Forecast.fromJson(Map<String, dynamic> json) {
-    var list = json['forecastday'] as List;
-    List<ForecastDay> forecastDayList = list.map((i) => ForecastDay.fromJson(i)).toList();
-
-    return Forecast(
-      forecastday: forecastDayList,
+  factory ForecastData.fromJson(Map<String, dynamic> json) {
+    return ForecastData(
+      forecastday: (json['forecastday'] as List)
+          .map((e) => ForecastDay.fromJson(e))
+          .toList(),
     );
   }
+}
+
+class Forecast {
+  final Location location;
+  final CurrentWeather current;
+  final ForecastData forecast;
+
+  Forecast({
+    required this.location,
+    required this.current,
+    required this.forecast,
+  });
+
+  factory Forecast.fromJson(Map<String, dynamic> json) {
+    return Forecast(
+      location: Location.fromJson(json['location']),
+      current: CurrentWeather.fromJson(json['current']),
+      forecast: ForecastData.fromJson(json['forecast']),
+    );
+
+  // factory Forecast.fromJson(Map<String, dynamic> json) {
+  //   var list;
+  //   if(json['forecast'] == null) {
+  //     list=[];
+  //   }
+  //   list = json['forecastday'] as List;
+  //   List<ForecastDay> forecast = list.map((i) => ForecastDay.fromJson(i)).toList();
+
+  //   return Forecast(
+  //     location: Location.fromJson(json['location']),
+  //     current: CurrentWeather.fromJson(json['current']),
+  //     forecast: List<ForecastDay>.from(
+  //         json['forecastday'].map((x) => ForecastDay.fromJson(x))),
+  //   );
+   }
 }
 
