@@ -1,26 +1,56 @@
+import 'dart:async';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/API/weather.dart';
-
+import 'package:retry/retry.dart';
+import 'dart:io';
 
 class ApiService{
-   Future<ActualWeatherData> fetch_current_weather(String query) async {
-    final url = Uri.parse('http://api.weatherapi.com/v1/current.json').replace(queryParameters: {
-      'key': '3e717471fb2744edba5183739242905',
-      'q': query,
-    });
-    final response = await http.get(url, headers: {'Authorization': 'Bearer 3e717471fb2744edba5183739242905',});    
-    // final response = await http.get(url, headers: {
-    //   'Authorization': 'Bearer 3e717471fb2744edba5183739242905',
-    // });
+  //  Future<ActualWeatherData> fetch_current_weather(String query) async {
+  //   final url = Uri.parse('http://api.weatherapi.com/v1/current.json').replace(queryParameters: {
+  //     'key': '3e717471fb2744edba5183739242905',
+  //     'q': query,
+  //   });
+  //   final response = await http.get(url, headers: {'Authorization': 'Bearer 3e717471fb2744edba5183739242905',});    
+  //   // final response = await http.get(url, headers: {
+  //   //   'Authorization': 'Bearer 3e717471fb2744edba5183739242905',
+  //   // });
+
+  //   if (response.statusCode == 200) {
+  //     return ActualWeatherData.fromJson(jsonDecode(response.body));
+  //   } else {
+  //     throw Exception('Failed to load Weather Data: ${response.statusCode}');
+  //   }
+  // }
+  Future<ActualWeatherData> fetch_current_weather(String query) async {
+  final url = Uri.parse('http://api.weatherapi.com/v1/current.json').replace(queryParameters: {
+    'key': '3e717471fb2744edba5183739242905',
+    'q': query,
+  });
+
+  final r = RetryOptions(maxAttempts: 3);
+
+  try {
+    final response = await r.retry(
+      () => http.get(url).timeout(Duration(seconds: 20)), // Increased timeout to 20 seconds
+      retryIf: (e) => e is SocketException || e is TimeoutException,
+      onRetry: (e) {
+        print('Retrying due to: $e');
+      },
+    );
 
     if (response.statusCode == 200) {
       return ActualWeatherData.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load Weather Data: ${response.statusCode}');
     }
+  } catch (e) {
+    print('Error fetching data: $e');
+    throw Exception('Failed to fetch weather data');
   }
+}
 
   // Future<ActualWeatherData> fetch_forecast(String endpoint) async {
   //   final url = Uri.parse('http://api.weatherapi.com/v1/$endpoint');

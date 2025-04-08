@@ -43,6 +43,8 @@ dependencies:
   flutter_secure_storage: ^7.0.1
   json_annotation: ^4.4.0
   animate_gradient: ^0.0.3
+  retry: ^3.0.1
+  connectivity: ^3.0.6
 
 dev_dependencies:
   flutter_test:
