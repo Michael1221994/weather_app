@@ -40,11 +40,10 @@ dependencies:
   location: ^6.0.2
   animated_text_kit: ^4.2.1
   http: ^1.2.1
-  flutter_secure_storage: ^7.0.1
   json_annotation: ^4.4.0
   animate_gradient: ^0.0.3
   retry: ^3.0.1
-  connectivity: ^3.0.6
+  connectivity_plus: ^6.1.5
 
 dev_dependencies:
   flutter_test:

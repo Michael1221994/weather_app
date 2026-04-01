@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'package:connectivity/connectivity.dart';
-import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/API/weather.dart';
@@ -30,11 +28,11 @@ class ApiService{
     'q': query,
   });
 
-  final r = RetryOptions(maxAttempts: 3);
+  const r = RetryOptions(maxAttempts: 3);
 
   try {
     final response = await r.retry(
-      () => http.get(url).timeout(Duration(seconds: 20)), // Increased timeout to 20 seconds
+      () => http.get(url).timeout(const Duration(seconds: 20)), // Increased timeout to 20 seconds
       retryIf: (e) => e is SocketException || e is TimeoutException,
       onRetry: (e) {
         print('Retrying due to: $e');

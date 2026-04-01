@@ -7,7 +7,7 @@ import 'package:geocoding/geocoding.dart';
 
 class HomePage extends StatefulWidget {  
    
-  const HomePage({Key? key,});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => HomePageState();
@@ -65,7 +65,7 @@ class HomePageState extends State<HomePage> {
   // continue accessing the position of the device.
   
   
-      Position p= await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high, timeLimit: Duration(seconds: 30));
+      Position p= await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high, timeLimit: const Duration(seconds: 30));
       print("Position obtained: $position");//debug
       setState(() {
         position= p;
@@ -128,7 +128,7 @@ UseMyLocation(bool? newvalue) async {
       //backgroundColor: Colors.black,
       
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
          gradient: LinearGradient(
            begin: Alignment.topRight,
             end: Alignment.bottomLeft,
@@ -231,7 +231,7 @@ UseMyLocation(bool? newvalue) async {
                                   //    children: [
                                   //      Expanded(child: Text(pos ?? "", style: const TextStyle(color: Colors.white),))],),
                                          Padding(
-                                          padding: EdgeInsets.only (left:35.0),
+                                          padding: const EdgeInsets.only (left:35.0),
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
