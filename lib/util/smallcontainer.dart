@@ -8,21 +8,20 @@ import '../API/weather.dart';
 import 'package:weather_app/util/countrydropdown.dart';
 
 class Smallcontainer extends StatefulWidget {
-    final String text;
-    final double temp_in_celc;
-    final double temp_in_fahr;
-    final String WeatherIcon;
-    final String descriptiontext;
+  final String text;
+  final double temp_in_celc;
+  final double temp_in_fahr;
+  final String WeatherIcon;
+  final String descriptiontext;
 
-   Smallcontainer({
+  const Smallcontainer({
     super.key,
     required this.text,
     required this.temp_in_celc,
     required this.temp_in_fahr,
     required this.WeatherIcon,
     required this.descriptiontext,
-    });
-    
+  });
 
   @override
   State<Smallcontainer> createState() => _SmallcontainerState();
@@ -31,78 +30,78 @@ class Smallcontainer extends StatefulWidget {
 class _SmallcontainerState extends State<Smallcontainer> {
   late Future<Forecast> forecast;
   //String city= HomePage.city?? Country_dropdownbtn._selectedcountry;
-  
+
   @override
   Widget build(BuildContext context) {
-     final size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
 
     // try{
     //   forecast= ApiService().fetchForecast(city, days: 14, dt: 'no');
     // }catch (e){}
     return Container(
-      decoration:BoxDecoration(
-         color: Colors.white.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
           color: Colors.white.withOpacity(0.2),
           width: 0.5,
         ),
       ),
       height: size.height * 0.16,
       width: size.width * 0.3,
-      
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Flexible(
-              flex:1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children:[Text(widget.text, style: TextStyle(color:Colors.white)),]
-                ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Flexible(
+            flex: 1,
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(widget.text, style: const TextStyle(color: Colors.white)),
+            ]),
+          ),
+          Flexible(
+            flex: 2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.network(
+                  'http:${widget.WeatherIcon}',
+                  height: size.height * 0.15,
+                  width: size.width * 0.15,
+                  fit: BoxFit.fill,
+                )
+              ],
             ),
-            Flexible(
-              flex: 2,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                    Image.network(
-                      'http:${widget.WeatherIcon}',
-                      height: size.height * 0.15,
-                      width: size.width * 0.15,
-                      fit: BoxFit.fill,
-                    )
-                ],
-              ),
-            ),
-            Flexible(
-              flex: 1,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('${widget.descriptiontext}', style: TextStyle(color:Colors.white, fontSize: 10), overflow: TextOverflow.fade, softWrap: false, maxLines: 2),
-                  ],
-                ),
-              ),
-            ),
-            Flexible(
-              flex: 1,
+          ),
+          Flexible(
+            flex: 1,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('${widget.temp_in_celc}c / ${widget.temp_in_fahr}f', style: TextStyle(color:Colors.white, fontSize: 10)),
+                  Text(widget.descriptiontext,
+                      style: const TextStyle(color: Colors.white, fontSize: 10),
+                      overflow: TextOverflow.fade,
+                      softWrap: false,
+                      maxLines: 2),
                 ],
               ),
-            )
-          ],
-        ),
-      );
+            ),
+          ),
+          Flexible(
+            flex: 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('${widget.temp_in_celc}c / ${widget.temp_in_fahr}f',
+                    style: const TextStyle(color: Colors.white, fontSize: 10)),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
-
-  
-  
 }
 
 

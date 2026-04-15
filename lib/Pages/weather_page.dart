@@ -5,9 +5,7 @@ import 'package:weather_app/API/API_service.dart';
 import 'package:weather_app/API/weather.dart';
 import 'package:weather_app/Pages/home.dart';
 import 'package:weather_app/util/smallcontainer.dart';
-import 'package:http/http.dart' as http;
 import 'dart:async';
-import 'dart:io' as io;
 
 import '../util/countrydropdown.dart';
 
@@ -23,6 +21,7 @@ class _WeatherPageState extends State<WeatherPage> {
   late Forecast forecast;  
   late String q;
   bool isLoading = true; // Track loading state
+  String? errorMessage;
   
    @override
   void initState() {
@@ -41,7 +40,7 @@ class _WeatherPageState extends State<WeatherPage> {
     try {
        current_weather = await ApiService().fetch_current_weather(q);
        print(current_weather);
-       forecast = await ApiService().fetchForecast('${q}', days:14, aqi:'no', alerts:'no');
+       forecast = await ApiService().fetchForecast(q, days:14, aqi:'no', alerts:'no');
        print(forecast);
        setState(() {
         isLoading = false; // Update loading state
@@ -49,6 +48,10 @@ class _WeatherPageState extends State<WeatherPage> {
     } catch (e) {
       // Handle any errors that may occur during the fetch
       print('Error fetching data: $e');
+      setState(() {
+        errorMessage = e.toString();
+        isLoading = false;
+      });
     }
   }
 
@@ -64,7 +67,23 @@ class _WeatherPageState extends State<WeatherPage> {
         return dateTime.split(' ')[1];
       }
      if (isLoading) {
-      return Center(child: CircularProgressIndicator());}
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+    if (errorMessage != null) {
+      return Scaffold(
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              'Could not load weather data.\n$errorMessage',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      );
+    }
       
       final List<Smallcontainer> hourlyContainers=[
       Smallcontainer(
@@ -354,7 +373,7 @@ class _WeatherPageState extends State<WeatherPage> {
       
       //backgroundColor: Color.fromARGB(255, 31, 145, 110),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
         gradient: LinearGradient(
            begin: Alignment.topRight,
             end: Alignment.bottomLeft,
@@ -369,9 +388,9 @@ class _WeatherPageState extends State<WeatherPage> {
       ),
         child: Center(
           child: Padding(
-            padding: EdgeInsets.only(top: 50.0),
+            padding: const EdgeInsets.only(top: 50.0),
             child: isLoading
-                ? CircularProgressIndicator()
+                ? const CircularProgressIndicator()
                 : Column(
               children: [
                 Padding(
@@ -452,7 +471,7 @@ class _WeatherPageState extends State<WeatherPage> {
                                 Text('Max temp: ${forecast.forecast.forecastday[0].day.maxtempC}c/ ${forecast.forecast.forecastday[0].day.maxtempF}f',style: const TextStyle(color: Colors.white, fontSize: 12),),
                                 Text('Max wind: ${forecast.forecast.forecastday[0].day.maxwindKph}km/ ${forecast.forecast.forecastday[0].day.maxwindMph}mph',style: const TextStyle(color: Colors.white, fontSize: 12),),
                                 Text('chance of rain: ${forecast.forecast.forecastday[0].day.dailyChanceOfRain}%',style: const TextStyle(color: Colors.white, fontSize: 12),),
-                                Text('Cloud:${forecast.current.cloud}',style: TextStyle(color: Colors.white, fontSize: 12),),
+                                Text('Cloud:${forecast.current.cloud}',style: const TextStyle(color: Colors.white, fontSize: 12),),
                                 Text('Gust: ${forecast.current.gustKph}km/ ${forecast.current.gustMph}mph',style: const TextStyle(color: Colors.white, fontSize: 12),),
                                 Text('UV: ${forecast.current.uv}',style: const TextStyle(color: Colors.white),),
                                 Text('Visibility: ${forecast.current.visKm}km/ ${forecast.current.visMiles}miles',style: const TextStyle(color: Colors.white, fontSize: 12),),
@@ -462,7 +481,7 @@ class _WeatherPageState extends State<WeatherPage> {
                         ),
                         ),
                       ),
-                        SizedBox(width: 5),
+                        const SizedBox(width: 5),
                    Flexible(
                     flex: 2,
                       child: Container(
@@ -510,8 +529,8 @@ class _WeatherPageState extends State<WeatherPage> {
                         ),               
                         child: Column(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left:20.0),
+                            const Padding(
+                              padding: EdgeInsets.only(left:20.0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [                                
@@ -551,13 +570,13 @@ class _WeatherPageState extends State<WeatherPage> {
                         child: Column(
                           children: [
         
-                            Padding(
-                              padding: const EdgeInsets.only(left:20.0),
+                            const Padding(
+                              padding: EdgeInsets.only(left:20.0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(right:0, left:0),
+                                    padding: EdgeInsets.only(right:0, left:0),
                                     child: Text('Forecast', style: TextStyle(color: Colors.white, fontSize: 14, fontFamily: 'anton' ),),
                                   ),
                                 ],

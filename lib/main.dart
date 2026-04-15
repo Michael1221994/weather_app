@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         // Set the color of the Radio widget
         unselectedWidgetColor: Colors.white,
       ),
-      home: LandingPage(),
+      home: const LandingPage(),
       
       
     );
