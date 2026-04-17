@@ -160,11 +160,10 @@ class HomePageState extends State<HomePage> {
                         left: size.width * 0.32, top: size.height * 0.15),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(27),
-                      child: Image.asset(
-                        'lib/Images/partly-cloudy.ico',
-                        height: size.height * 0.16,
-                        width: size.width * 0.3,
-                        fit: BoxFit.contain,
+                      child: Icon(
+                        Icons.cloud,
+                        size: size.height * 0.16,
+                        color: Colors.white,
                       ),
                     ),
                   ),
