@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/Pages/landing_page.dart';
+import 'dart:async';
+import 'package:weather_app/Pages/home.dart';
 
 
 void main() {
@@ -32,15 +33,58 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final List<String> _quotes = const [
+    'Get current weather and forecast quickly.',
+    'Plan your day with live conditions.',
+    'Stay ahead of rain, wind, and heat.',
+    'Your local forecast at a glance.',
+  ];
+
+  String _typedQuote = '';
+  int _quoteIndex = 0;
+  bool _shouldStopTyping = false;
+  Timer? _navigationTimer;
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
+    _startTypewriterLoop();
+    _navigationTimer = Timer(const Duration(seconds: 10), () {
       if (!mounted) return;
+      _shouldStopTyping = true;
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const LandingPage()),
+        MaterialPageRoute(builder: (_) => const HomePage()),
       );
     });
+  }
+
+  Future<void> _startTypewriterLoop() async {
+    while (mounted && !_shouldStopTyping) {
+      final String quote = _quotes[_quoteIndex];
+
+      for (int i = 1; i <= quote.length; i++) {
+        if (!mounted || _shouldStopTyping) return;
+        setState(() {
+          _typedQuote = quote.substring(0, i);
+        });
+        await Future.delayed(const Duration(milliseconds: 55));
+      }
+
+      await Future.delayed(const Duration(milliseconds: 650));
+      if (!mounted || _shouldStopTyping) return;
+
+      setState(() {
+        _typedQuote = '';
+        _quoteIndex = (_quoteIndex + 1) % _quotes.length;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _shouldStopTyping = true;
+    _navigationTimer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -59,18 +103,28 @@ class _SplashScreenState extends State<SplashScreen> {
             ],
           ),
         ),
-        child: const Center(
+        child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.cloud, color: Colors.white, size: 72),
-              SizedBox(height: 16),
-              Text(
+              const Icon(Icons.cloud, color: Colors.white, size: 72),
+              const SizedBox(height: 16),
+              const Text(
                 'Olympus Forecast',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                '"$_typedQuote"',
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white70,
+                  fontSize: 14,
+                  fontStyle: FontStyle.italic,
                 ),
               ),
             ],

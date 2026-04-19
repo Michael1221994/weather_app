@@ -136,22 +136,23 @@ class HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Row(children: [
-                IconButton(
-                    icon: const Icon(Icons.exit_to_app),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LandingPage()));
-                    },
-                    color: Colors.white),
-              ]),
-            ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, left: 4.0),
+                child: Row(children: [
+                  IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LandingPage()));
+                      },
+                      color: Colors.white),
+                ]),
+              ),
             Center(
               child: Stack(
                 children: [
@@ -246,6 +247,7 @@ class HomePageState extends State<HomePage> {
               ),
             ),
           ],
+          ),
         ),
       ),
     );
