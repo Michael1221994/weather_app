@@ -119,7 +119,6 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       //backgroundColor: Colors.black,
 
@@ -153,99 +152,83 @@ class HomePageState extends State<HomePage> {
                       color: Colors.white),
                 ]),
               ),
-            Center(
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: size.width * 0.32, top: size.height * 0.15),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(27),
-                      child: Icon(
-                        Icons.cloud,
-                        size: size.height * 0.16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        bottom: 10.0, left: 10.0, right: 10),
+              Expanded(
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Container(
-                      height: size.height * 0.88,
-                      width: size.width * 0.9,
+                      width: double.infinity,
+                      constraints: const BoxConstraints(maxWidth: 420),
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
                           color: Colors.white.withOpacity(0.2),
-                          width: 0.5, // Adjust the width of the glowing border
+                          width: 0.5,
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.white.withOpacity(
-                                0.04), // Adjust the opacity if needed
+                            color: Colors.white.withOpacity(0.04),
                             blurRadius: 20,
                             spreadRadius: 10,
                           ),
                         ],
                       ),
-                      alignment: Alignment.center,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Location',
-                            style: TextStyle(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 28.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.cloud,
+                              size: 72,
                               color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
                             ),
-                          ),
-                          Container(
-                            width: 160,
-                            height:
-                                1, // Adjust the height of the line as needed
-                            color: Colors
-                                .white, // Adjust the color of the line as needed
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Radio(
-                                value: Radiovalue,
-                                groupValue: true,
-                                onChanged: UseMyLocation,
-                                activeColor: Colors.white,
+                            const SizedBox(height: 16),
+                            const Text(
+                              'Location',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
                               ),
-                              const Text(
-                                'My Location',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                          //  Row(
-                          //    mainAxisAlignment: MainAxisAlignment.center,
-                          //    children: [
-                          //      Expanded(child: Text(pos ?? "", style: const TextStyle(color: Colors.white),))],),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 35.0),
-                            child: Row(
+                            ),
+                            const SizedBox(height: 8),
+                            Container(
+                              width: 160,
+                              height: 1,
+                              color: Colors.white,
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Country_dropdownbtn(),
+                                Radio(
+                                  value: Radiovalue,
+                                  groupValue: true,
+                                  onChanged: UseMyLocation,
+                                  activeColor: Colors.white,
+                                ),
+                                const Text(
+                                  'My Location',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ],
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 12),
+                            const Center(
+                              child: Country_dropdownbtn(),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
           ],
           ),
         ),
